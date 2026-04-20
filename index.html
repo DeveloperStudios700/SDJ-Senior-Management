@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDJ Legal System</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* 🔥 ANIMATED BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, #0a0d14, #111827, #1e293b, #0a0d14);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  z-index: -2;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0%}
+  50% {background-position: 100%}
+  100% {background-position: 0%}
+}
+
+/* ✨ MOVING TEXT (FIXED POSITION LOWER) */
+.banner {
+  position: fixed;
+  top: 45%; /* 👈 MOVED DOWN */
+  left: 0;
+  width: 100%;
+  white-space: nowrap;
+  font-size: 70px;
+  font-weight: 800;
+  opacity: 0.05;
+  text-align: center;
+  animation: slideText 14s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes slideText {
+  0% { transform: translateX(100%); }
+  50% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* HEADER */
+.header {
+  padding: 20px 40px;
+  backdrop-filter: blur(10px);
+  background: rgba(15,20,33,0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.header h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* 🚨 LEGAL WARNING */
+.warning {
+  margin: 20px;
+  padding: 18px;
+  border-left: 4px solid #ef4444;
+  background: rgba(239,68,68,0.08);
+  color: #fecaca;
+  font-size: 14px;
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+}
+
+/* LAYOUT */
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* CARDS */
+.card {
+  background: rgba(15,23,42,0.7);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+}
+
+tr {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+tr:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* STATUS */
+.status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.banned {
+  background: rgba(239,68,68,0.2);
+  color: #fca5a5;
+}
+
+/* CASE PANEL */
+.field {
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.evidence img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.evidence a {
+  color: #60a5fa;
+  display: block;
+  margin-top: 10px;
+}
+
+/* SEARCH */
+.search input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ✨ MOVING TEXT -->
+<div class="banner">SDJ SENIOR MANAGEMENT</div>
+
+<div class="header">
+  <h2>SDJ Productions — Legal Enforcement System</h2>
+</div>
+
+<!-- 🚨 LEGAL WARNING -->
+<div class="warning">
+  <strong>Notice:</strong> Enforcement actions recorded within this system may include both temporary and permanent restrictions. Each case is reviewed individually based on severity, supporting evidence, and prior conduct history.
+</div>
+
+<div style="padding:20px" class="search">
+  <input id="search" placeholder="Search cases...">
+</div>
+
+<div class="container">
+
+<!-- LEFT TABLE -->
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>User</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="table">
+
+<tr onclick="loadCase(this)"
+data-case="SDJ-001"
+data-user="Lazar (winter_w1)"
+data-status="Blacklisted"
+data-reason="Confirmed asset theft across CRB and associated groups"
+data-date="20 Apr 2026"
+data-by="yer2089">
+
+<td>SDJ-001</td>
+<td>Lazar</td>
+<td><span class="status banned">Banned</span></td>
+
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="card">
+
+<h2>Case File</h2>
+
+<div class="field">
+<div class="label">Case ID</div>
+<div id="c_id">Select case</div>
+</div>
+
+<div class="field">
+<div class="label">User</div>
+<div id="c_user">-</div>
+</div>
+
+<div class="field">
+<div class="label">Status</div>
+<div id="c_status">-</div>
+</div>
+
+<div class="field">
+<div class="label">Violation</div>
+<div id="c_reason">-</div>
+</div>
+
+<div class="field">
+<div class="label">Issued Date</div>
+<div id="c_date">-</div>
+</div>
+
+<div class="field">
+<div class="label">Issued By</div>
+<div id="c_by">-</div>
+</div>
+
+<div class="field evidence">
+<div class="label">Evidence</div>
+
+<img src="YOUR_IMAGE_LINK_1">
+<img src="YOUR_IMAGE_LINK_2">
+<img src="YOUR_IMAGE_LINK_3">
+<img src="YOUR_IMAGE_LINK_4">
+
+<a href="https://youtu.be/bULTQ2LuluU" target="_blank">View Video Evidence</a>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function loadCase(row) {
+  document.getElementById("c_id").textContent = row.dataset.case;
+  document.getElementById("c_user").textContent = row.dataset.user;
+  document.getElementById("c_status").textContent = row.dataset.status;
+  document.getElementById("c_reason").textContent = row.dataset.reason;
+  document.getElementById("c_date").textContent = row.dataset.date;
+  document.getElementById("c_by").textContent = row.dataset.by;
+}
+
+document.getElementById("search").addEventListener("keyup", function() {
+  let val = this.value.toLowerCase();
+  document.querySelectorAll("#table tr").forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(val) ? "" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
